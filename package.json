@@ -5,7 +5,8 @@
   "description": "This directive gives you a Bootstrap Dropdown with the power of AngularJS directives.",
   "homepage": "http://dotansimha.github.io/angularjs-dropdown-multiselect/#/",
   "dependencies": {
-    "angular": "~1"
+    "angular": "~1",
+    "grunt-cli": "^1.3.2"
   },
   "devDependencies": {
     "express": "~3.4.4",
