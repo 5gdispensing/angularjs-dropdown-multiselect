@@ -335,7 +335,8 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
 
 			$scope.selectAll = function() {
 				var searchResult;
-				$scope.deselectAll(true);
+				// CHANGED: no need to deselect all items out of filtered result
+				// $scope.deselectAll(true);
 				$scope.externalEvents.onSelectAll();
 
 				searchResult = $filter('filter')($scope.options, $scope.getFilter($scope.input.searchFilter));
@@ -356,7 +357,12 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
 				if ($scope.singleSelection) {
 					clearObject($scope.selectedModel);
 				} else {
-					$scope.selectedModel.splice(0, $scope.selectedModel.length);
+					// CHANGED: need to deselect options one by one, using only filtered result
+					var searchResult = $filter('filter')($scope.options, $scope.getFilter($scope.input.searchFilter));
+					angular.forEach(searchResult, function(value) {
+						$scope.setSelectedItem(value[$scope.settings.idProp], false, false);
+					});
+					// $scope.selectedModel.splice(0, $scope.selectedModel.length);
 				}
 				if (!dontSendEvent) {
 					$scope.externalEvents.onSelectionChanged();
